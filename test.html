@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobileMaster - Your Ultimate Phone Comparison Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: '#3b82f6', secondary: '#f59e0b' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-section {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0.5) 70%, rgba(255, 255, 255, 0) 100%);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .brand-bg {
+            background-size: 30%;
+            background-repeat: no-repeat;
+            background-position: 95% center;
+            background-blend-mode: soft-light;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: none;
+        }
+
+        .custom-checkbox {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid #d1d5db;
+            background-color: white;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox.checked {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .custom-checkbox.checked::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 6px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .custom-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background-color: #e5e7eb;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .custom-switch.active {
+            background-color: #3b82f6;
+        }
+
+        .custom-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .custom-switch.active::after {
+            left: 22px;
+        }
+
+        .compare-bar {
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .compare-bar.show {
+            transform: translateY(0);
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .brand-tab.active {
+            color: #3b82f6;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-['Pacifico'] text-primary">logo</a>
+                    <nav class="hidden lg:flex ml-12 space-x-8">
+                        <a href="#"
+                            class="text-gray-700 hover:text-primary font-medium text-sm px-1 py-2 border-b-2 border-transparent hover:border-primary transition-colors">Home</a>
+                        <a href="#brands"
+                            class="text-gray-700 hover:text-primary font-medium text-sm px-1 py-2 border-b-2 border-transparent hover:border-primary transition-colors">Brands</a>
+                        <a href="#compare"
+                            class="text-gray-700 hover:text-primary font-medium text-sm px-1 py-2 border-b-2 border-transparent hover:border-primary transition-colors">Compare</a>
+                        <a href="#deals"
+                            class="text-gray-700 hover:text-primary font-medium text-sm px-1 py-2 border-b-2 border-transparent hover:border-primary transition-colors">Deals</a>
+                        <a href="#about"
+                            class="text-gray-700 hover:text-primary font-medium text-sm px-1 py-2 border-b-2 border-transparent hover:border-primary transition-colors">About
+                            Us</a>
+                        <a href="#contact"
+                            class="text-gray-700 hover:text-primary font-medium text-sm px-1 py-2 border-b-2 border-transparent hover:border-primary transition-colors">Contact</a>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <div class="relative hidden md:block">
+                        <input type="text" placeholder="Search phones..."
+                            class="w-72 pl-10 pr-4 py-2 rounded-lg bg-gray-50 border-none text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white">
+                        <div
+                            class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400">
+                            <i class="ri-search-line text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative" id="cart-container">
+                            <button
+                                class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-50 relative group"
+                                id="cart-button">
+                                <i
+                                    class="ri-shopping-cart-2-line text-lg text-gray-700 group-hover:text-primary transition-colors"></i>
+                                <span
+                                    class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
+                            </button>
+                            <div class="hidden absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
+                                id="cart-dropdown">
+                                <div class="p-4">
+                                    <div class="space-y-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://readdy.ai/api/search-image?query=iphone%2015%20pro%20max%20smartphone%20on%20clean%20white%20background%2C%20minimalist%20product%20photo&width=80&height=80&seq=29&orientation=squarish"
+                                                alt="iPhone 15 Pro Max" class="w-16 h-16 object-cover rounded">
+                                            <div class="flex-grow">
+                                                <h4 class="text-sm font-medium">iPhone 15 Pro Max</h4>
+                                                <div class="flex items-center gap-2 mt-1">
+                                                    <div class="flex border rounded">
+                                                        <button class="px-2 py-1 text-gray-600 hover:bg-gray-100"
+                                                            data-action="decrease">-</button>
+                                                        <input type="text" value="1" class="w-8 text-center border-x"
+                                                            readonly>
+                                                        <button class="px-2 py-1 text-gray-600 hover:bg-gray-100"
+                                                            data-action="increase">+</button>
+                                                    </div>
+                                                    <button class="text-red-500 hover:text-red-600 text-sm"
+                                                        data-action="remove">Remove</button>
+                                                </div>
+                                            </div>
+                                            <div class="text-sm font-medium">$1,199</div>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20s23%20ultra%20smartphone%20on%20clean%20white%20background%2C%20minimalist%20product%20photo&width=80&height=80&seq=30&orientation=squarish"
+                                                alt="Samsung Galaxy S23 Ultra" class="w-16 h-16 object-cover rounded">
+                                            <div class="flex-grow">
+                                                <h4 class="text-sm font-medium">Galaxy S23 Ultra</h4>
+                                                <div class="flex items-center gap-2 mt-1">
+                                                    <div class="flex border rounded">
+                                                        <button class="px-2 py-1 text-gray-600 hover:bg-gray-100"
+                                                            data-action="decrease">-</button>
+                                                        <input type="text" value="1" class="w-8 text-center border-x"
+                                                            readonly>
+                                                        <button class="px-2 py-1 text-gray-600 hover:bg-gray-100"
+                                                            data-action="increase">+</button>
+                                                    </div>
+                                                    <button class="text-red-500 hover:text-red-600 text-sm"
+                                                        data-action="remove">Remove</button>
+                                                </div>
+                                            </div>
+                                            <div class="text-sm font-medium">$1,099</div>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://readdy.ai/api/search-image?query=google%20pixel%207%20pro%20smartphone%20on%20clean%20white%20background%2C%20minimalist%20product%20photo&width=80&height=80&seq=31&orientation=squarish"
+                                                alt="Google Pixel 7 Pro" class="w-16 h-16 object-cover rounded">
+                                            <div class="flex-grow">
+                                                <h4 class="text-sm font-medium">Pixel 7 Pro</h4>
+                                                <div class="flex items-center gap-2 mt-1">
+                                                    <div class="flex border rounded">
+                                                        <button class="px-2 py-1 text-gray-600 hover:bg-gray-100"
+                                                            data-action="decrease">-</button>
+                                                        <input type="text" value="1" class="w-8 text-center border-x"
+                                                            readonly>
+                                                        <button class="px-2 py-1 text-gray-600 hover:bg-gray-100"
+                                                            data-action="increase">+</button>
+                                                    </div>
+                                                    <button class="text-red-500 hover:text-red-600 text-sm"
+                                                        data-action="remove">Remove</button>
+                                                </div>
+                                            </div>
+                                            <div class="text-sm font-medium">$799</div>
+                                        </div>
+                                    </div>
+                                    <div class="border-t mt-4 pt-4">
+                                        <div class="flex justify-between text-sm font-medium">
+                                            <span>Subtotal</span>
+                                            <span>$3,097</span>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-2 mt-4">
+                                        <a href="#"
+                                            class="bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium py-2 text-center !rounded-button whitespace-nowrap">View
+                                            Cart</a>
+                                        <a href="#"
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 text-center !rounded-button whitespace-nowrap">Checkout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-50 group">
+                            <i
+                                class="ri-user-line text-lg text-gray-700 group-hover:text-primary transition-colors"></i>
+                        </button>
+                        <button
+                            class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-50 group"
+                            id="mobile-menu-button">
+                            <i
+                                class="ri-menu-line text-lg text-gray-700 group-hover:text-primary transition-colors"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:hidden" id="mobile-menu">
+                <div class="fixed inset-0 bg-gray-800 bg-opacity-50 z-40 hidden" id="mobile-menu-overlay"></div>
+                <div class="fixed top-0 right-0 bottom-0 w-64 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300"
+                    id="mobile-menu-content">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-8">
+                            <span class="text-xl font-['Pacifico'] text-primary">logo</span>
+                            <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-50"
+                                id="mobile-menu-close">
+                                <i class="ri-close-line text-xl text-gray-700"></i>
+                            </button>
+                        </div>
+                        <nav class="flex flex-col space-y-4">
+                            <a href="#"
+                                class="text-gray-700 hover:text-primary font-medium py-2 border-b border-gray-100">Home</a>
+                            <a href="#brands"
+                                class="text-gray-700 hover:text-primary font-medium py-2 border-b border-gray-100">Brands</a>
+                            <a href="#compare"
+                                class="text-gray-700 hover:text-primary font-medium py-2 border-b border-gray-100">Compare</a>
+                            <a href="#deals"
+                                class="text-gray-700 hover:text-primary font-medium py-2 border-b border-gray-100">Deals</a>
+                            <a href="#about"
+                                class="text-gray-700 hover:text-primary font-medium py-2 border-b border-gray-100">About
+                                Us</a>
+                            <a href="#contact"
+                                class="text-gray-700 hover:text-primary font-medium py-2 border-b border-gray-100">Contact</a>
+                        </nav>
+                        <div class="mt-8">
+                            <div class="relative">
+                                <input type="text" placeholder="Search phones..."
+                                    class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-50 border-none text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white">
+                                <div
+                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400">
+                                    <i class="ri-search-line text-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </header>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileMenuContent = document.getElementById('mobile-menu-content');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            function openMobileMenu() {
+                mobileMenuOverlay.classList.remove('hidden');
+                mobileMenuContent.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeMobileMenu() {
+                mobileMenuOverlay.classList.add('hidden');
+                mobileMenuContent.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+            }
+            mobileMenuButton.addEventListener('click', openMobileMenu);
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+            mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+        });
+    </script>
+    <!-- Hero Section -->
+    <section class="hero-section pt-24 relative"
+        style="background-image: url('https://readdy.ai/api/search-image?query=modern%20smartphone%20devices%20floating%20in%20air%20with%20soft%20gradient%20background%2C%20minimalist%20clean%20design%2C%20tech%20showcase%20with%20blue%20and%20white%20tones%2C%20professional%20product%20photography%20style%2C%20high-end%20mobile%20phones%20display%20with%20subtle%20shadows%20and%20reflections%2C%20premium%20look%20and%20feel&width=1600&height=800&seq=1&orientation=landscape')">
+        <div class="container mx-auto px-4 py-16 w-full">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Find Your Perfect Smartphone</h1>
+                    <p class="text-lg text-gray-700 mb-8">Compare features, specs, and prices across all major brands to
+                        make the best choice for your needs.</p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#compare"
+                            class="bg-primary hover:bg-blue-600 text-white font-semibold py-3 px-6 !rounded-button whitespace-nowrap">Compare
+                            Phones</a>
+                        <a href="#deals"
+                            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 px-6 border border-gray-300 !rounded-button whitespace-nowrap">View
+                            Deals</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Quick Stats -->
+        <div class="bg-white py-6 shadow-md relative">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">Phones Available</p>
+                        <p class="text-2xl font-bold text-gray-900">500+</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">Brands</p>
+                        <p class="text-2xl font-bold text-gray-900">25+</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">Daily Comparisons</p>
+                        <p class="text-2xl font-bold text-gray-900">2,500+</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">Happy Users</p>
+                        <p class="text-2xl font-bold text-gray-900">1M+</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Brand Navigation -->
+    <section id="brands" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Browse by Brand</h2>
+            <div class="flex overflow-x-auto pb-4 hide-scrollbar space-x-6 justify-center">
+                <div class="brand-tab active cursor-pointer flex flex-col items-center min-w-[80px]" data-brand="all">
+                    <div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-2">
+                        <i class="ri-smartphone-line text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-medium">All Brands</span>
+                </div>
+                <div class="brand-tab cursor-pointer flex flex-col items-center min-w-[80px]" data-brand="samsung">
+                    <div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-2">
+                        <i class="ri-samsung-fill text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-medium">Samsung</span>
+                </div>
+                <div class="brand-tab cursor-pointer flex flex-col items-center min-w-[80px]" data-brand="apple">
+                    <div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-2">
+                        <i class="ri-apple-fill text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-medium">Apple</span>
+                </div>
+                <div class="brand-tab cursor-pointer flex flex-col items-center min-w-[80px]" data-brand="google">
+                    <div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-2">
+                        <i class="ri-google-fill text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-medium">Google</span>
+                </div>
+                <div class="brand-tab cursor-pointer flex flex-col items-center min-w-[80px]" data-brand="xiaomi">
+                    <div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-2">
+                        <i class="ri-mi-fill text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-medium">Xiaomi</span>
+                </div>
+                <div class="brand-tab cursor-pointer flex flex-col items-center min-w-[80px]" data-brand="oneplus">
+                    <div class="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full mb-2">
+                        <i class="ri-oneplus-fill text-2xl"></i>
+                    </div>
+                    <span class="text-sm font-medium">OnePlus</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Main Content Area -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Filters Sidebar -->
+                <div class="lg:w-1/4">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-semibold mb-6">Filters</h3>
+                        <div class="mb-6">
+                            <h4 class="font-medium mb-3">Price Range</h4>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-gray-600">$100</span>
+                                <span class="text-sm text-gray-600">$2000</span>
+                            </div>
+                            <input type="range" min="100" max="2000" value="1000"
+                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <div class="flex items-center justify-between mt-3">
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">$</span>
+                                    <input type="number" value="100" min="100" max="2000"
+                                        class="w-24 pl-8 pr-2 py-2 border border-gray-300 rounded-md text-sm">
+                                </div>
+                                <span class="text-gray-500">-</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">$</span>
+                                    <input type="number" value="1000" min="100" max="2000"
+                                        class="w-24 pl-8 pr-2 py-2 border border-gray-300 rounded-md text-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="font-medium mb-3">RAM</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <div class="custom-checkbox" data-value="4GB"></div>
+                                    <label class="ml-2 text-sm text-gray-700">4GB</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="custom-checkbox checked" data-value="6GB"></div>
+                                    <label class="ml-2 text-sm text-gray-700">6GB</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="custom-checkbox checked" data-value="8GB"></div>
+                                    <label class="ml-2 text-sm text-gray-700">8GB</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="custom-checkbox" data-value="12GB"></div>
+                                    <label class="ml-2 text-sm text-gray-700">12GB or more</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="font-medium mb-3">Storage</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <div class="custom-checkbox" data-value="64GB"></div>
+                                    <label class="ml-2 text-sm text-gray-700">64GB</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="custom-checkbox checked" data-value="128GB"></div>
+                                    <label class="ml-2 text-sm text-gray-700">128GB</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="custom-checkbox" data-value="256GB"></div>
+                                    <label class="ml-2 text-sm text-gray-700">256GB</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="custom-checkbox" data-value="512GB"></div>
+                                    <label class="ml-2 text-sm text-gray-700">512GB or more</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="font-medium mb-3">Features</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm text-gray-700">5G</label>
+                                    <div class="custom-switch active" data-feature="5G"></div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm text-gray-700">Wireless Charging</label>
+                                    <div class="custom-switch active" data-feature="wireless"></div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm text-gray-700">Water Resistant</label>
+                                    <div class="custom-switch" data-feature="waterproof"></div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm text-gray-700">Expandable Storage</label>
+                                    <div class="custom-switch" data-feature="expandable"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-primary hover:bg-blue-600 text-white font-medium py-2 px-4 !rounded-button whitespace-nowrap">Apply
+                            Filters</button>
+                    </div>
+                </div>
+                <!-- Product Grid -->
+                <div class="lg:w-3/4">
+                    <!-- Tab Content -->
+                    <div class="tab-content active" id="all-content">
+                        <!-- Top Selling Section -->
+                        <div class="mb-10">
+                            <h2 class="text-2xl font-bold mb-6">Top Selling Mobile Phones</h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Phone Card 1 -->
+                                <div
+                                    class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=iphone%2015%20pro%20max%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=2&orientation=landscape"
+                                            alt="iPhone 15 Pro Max" class="w-full h-48 object-cover object-top">
+                                        <div
+                                            class="absolute top-3 right-3 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
+                                            Bestseller</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="text-lg font-semibold">iPhone 15 Pro Max</h3>
+                                            <div class="flex items-center">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-star-fill text-yellow-400"></i>
+                                                </div>
+                                                <span class="text-sm ml-1">4.9</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">A17 Pro, 8GB RAM, 256GB</p>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <span class="text-xl font-bold">$1,199</span>
+                                            <span class="text-sm text-green-600">Free shipping</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <button
+                                                class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                                Details</button>
+                                            <div class="flex items-center">
+                                                <div class="custom-checkbox compare-checkbox"
+                                                    data-phone="iPhone 15 Pro Max"></div>
+                                                <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Phone Card 2 -->
+                                <div
+                                    class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20s23%20ultra%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=3&orientation=landscape"
+                                            alt="Samsung Galaxy S23 Ultra" class="w-full h-48 object-cover object-top">
+                                        <div
+                                            class="absolute top-3 right-3 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                                            Popular</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="text-lg font-semibold">Galaxy S23 Ultra</h3>
+                                            <div class="flex items-center">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-star-fill text-yellow-400"></i>
+                                                </div>
+                                                <span class="text-sm ml-1">4.8</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">Snapdragon 8 Gen 2, 12GB RAM, 256GB</p>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <span class="text-xl font-bold">$1,099</span>
+                                            <span class="text-sm text-green-600">Free shipping</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <button
+                                                class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                                Details</button>
+                                            <div class="flex items-center">
+                                                <div class="custom-checkbox compare-checkbox"
+                                                    data-phone="Samsung Galaxy S23 Ultra"></div>
+                                                <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Phone Card 3 -->
+                                <div
+                                    class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=google%20pixel%207%20pro%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=4&orientation=landscape"
+                                            alt="Google Pixel 7 Pro" class="w-full h-48 object-cover object-top">
+                                        <div
+                                            class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                            20% Off</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="text-lg font-semibold">Google Pixel 7 Pro</h3>
+                                            <div class="flex items-center">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-star-fill text-yellow-400"></i>
+                                                </div>
+                                                <span class="text-sm ml-1">4.7</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">Tensor G2, 12GB RAM, 128GB</p>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <div>
+                                                <span class="text-xl font-bold">$799</span>
+                                                <span class="text-sm text-gray-500 line-through ml-2">$999</span>
+                                            </div>
+                                            <span class="text-sm text-green-600">Free shipping</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <button
+                                                class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                                Details</button>
+                                            <div class="flex items-center">
+                                                <div class="custom-checkbox compare-checkbox"
+                                                    data-phone="Google Pixel 7 Pro"></div>
+                                                <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Budget Phones Section -->
+                        <div class="mb-10">
+                            <h2 class="text-2xl font-bold mb-6">Best Budget Smartphones (Under $200)</h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Budget Phone 1 -->
+                                <div
+                                    class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=redmi%20note%2012%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20budget%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=5&orientation=landscape"
+                                            alt="Redmi Note 12" class="w-full h-48 object-cover object-top">
+                                        <div
+                                            class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                            Best Value</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="text-lg font-semibold">Redmi Note 12</h3>
+                                            <div class="flex items-center">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-star-fill text-yellow-400"></i>
+                                                </div>
+                                                <span class="text-sm ml-1">4.5</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">Snapdragon 685, 4GB RAM, 64GB</p>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <span class="text-xl font-bold">$179</span>
+                                            <span class="text-sm text-green-600">Free shipping</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <button
+                                                class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                                Details</button>
+                                            <div class="flex items-center">
+                                                <div class="custom-checkbox compare-checkbox"
+                                                    data-phone="Redmi Note 12"></div>
+                                                <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Budget Phone 2 -->
+                                <div
+                                    class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20a14%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20budget%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=6&orientation=landscape"
+                                            alt="Samsung Galaxy A14" class="w-full h-48 object-cover object-top">
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="text-lg font-semibold">Samsung Galaxy A14</h3>
+                                            <div class="flex items-center">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-star-fill text-yellow-400"></i>
+                                                </div>
+                                                <span class="text-sm ml-1">4.3</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">Exynos 850, 4GB RAM, 64GB</p>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <span class="text-xl font-bold">$199</span>
+                                            <span class="text-sm text-green-600">Free shipping</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <button
+                                                class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                                Details</button>
+                                            <div class="flex items-center">
+                                                <div class="custom-checkbox compare-checkbox"
+                                                    data-phone="Samsung Galaxy A14"></div>
+                                                <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Budget Phone 3 -->
+                                <div
+                                    class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=motorola%20moto%20g%20power%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20budget%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=7&orientation=landscape"
+                                            alt="Motorola Moto G Power" class="w-full h-48 object-cover object-top">
+                                        <div
+                                            class="absolute top-3 right-3 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                            Long Battery</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="text-lg font-semibold">Moto G Power</h3>
+                                            <div class="flex items-center">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-star-fill text-yellow-400"></i>
+                                                </div>
+                                                <span class="text-sm ml-1">4.4</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">Snapdragon 662, 4GB RAM, 64GB</p>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <span class="text-xl font-bold">$189</span>
+                                            <span class="text-sm text-green-600">Free shipping</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <button
+                                                class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                                Details</button>
+                                            <div class="flex items-center">
+                                                <div class="custom-checkbox compare-checkbox"
+                                                    data-phone="Motorola Moto G Power"></div>
+                                                <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Best Offers Section -->
+                        <div>
+                            <h2 class="text-2xl font-bold mb-6">Best Offers on Mobile Phones</h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Offer 1 -->
+                                <div
+                                    class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=oneplus%2011%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=8&orientation=landscape"
+                                            alt="OnePlus 11" class="w-full h-48 object-cover object-top">
+                                        <div
+                                            class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                            25% Off</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="text-lg font-semibold">OnePlus 11</h3>
+                                            <div class="flex items-center">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-star-fill text-yellow-400"></i>
+                                                </div>
+                                                <span class="text-sm ml-1">4.6</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">Snapdragon 8 Gen 2, 16GB RAM, 256GB</p>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <div>
+                                                <span class="text-xl font-bold">$699</span>
+                                                <span class="text-sm text-gray-500 line-through ml-2">$899</span>
+                                            </div>
+                                            <span class="text-sm text-green-600">Free shipping</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <button
+                                                class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                                Details</button>
+                                            <div class="flex items-center">
+                                                <div class="custom-checkbox compare-checkbox" data-phone="OnePlus 11">
+                                                </div>
+                                                <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Offer 2 -->
+                                <div
+                                    class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=xiaomi%2013%20pro%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=9&orientation=landscape"
+                                            alt="Xiaomi 13 Pro" class="w-full h-48 object-cover object-top">
+                                        <div
+                                            class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                            15% Off</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="text-lg font-semibold">Xiaomi 13 Pro</h3>
+                                            <div class="flex items-center">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-star-fill text-yellow-400"></i>
+                                                </div>
+                                                <span class="text-sm ml-1">4.5</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">Snapdragon 8 Gen 2, 12GB RAM, 256GB</p>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <div>
+                                                <span class="text-xl font-bold">$849</span>
+                                                <span class="text-sm text-gray-500 line-through ml-2">$999</span>
+                                            </div>
+                                            <span class="text-sm text-green-600">Free shipping</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <button
+                                                class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                                Details</button>
+                                            <div class="flex items-center">
+                                                <div class="custom-checkbox compare-checkbox"
+                                                    data-phone="Xiaomi 13 Pro"></div>
+                                                <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Offer 3 -->
+                                <div
+                                    class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=sony%20xperia%205%20iv%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=10&orientation=landscape"
+                                            alt="Sony Xperia 5 IV" class="w-full h-48 object-cover object-top">
+                                        <div
+                                            class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                            30% Off</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <h3 class="text-lg font-semibold">Sony Xperia 5 IV</h3>
+                                            <div class="flex items-center">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-star-fill text-yellow-400"></i>
+                                                </div>
+                                                <span class="text-sm ml-1">4.4</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">Snapdragon 8 Gen 1, 8GB RAM, 128GB</p>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <div>
+                                                <span class="text-xl font-bold">$699</span>
+                                                <span class="text-sm text-gray-500 line-through ml-2">$999</span>
+                                            </div>
+                                            <span class="text-sm text-green-600">Free shipping</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <button
+                                                class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                                Details</button>
+                                            <div class="flex items-center">
+                                                <div class="custom-checkbox compare-checkbox"
+                                                    data-phone="Sony Xperia 5 IV"></div>
+                                                <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Samsung Tab Content -->
+                    <div class="tab-content" id="samsung-content">
+                        <div class="brand-bg mb-8 p-6 rounded-lg bg-white shadow-sm"
+                            style="background-image: url('https://readdy.ai/api/search-image?query=samsung%20logo%20in%20blue%20color%20on%20white%20background%2C%20minimalist%20clean%20design%2C%20corporate%20branding%2C%20professional%20look&width=200&height=200&seq=11&orientation=squarish')">
+                            <h2 class="text-3xl font-bold mb-2">Samsung Smartphones</h2>
+                            <p class="text-gray-600 mb-4">Discover the latest innovations from Samsung</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Samsung Phone 1 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20s23%20ultra%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=12&orientation=landscape"
+                                        alt="Samsung Galaxy S23 Ultra" class="w-full h-48 object-cover object-top">
+                                    <div
+                                        class="absolute top-3 right-3 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                                        Flagship</div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">Galaxy S23 Ultra</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.8</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">Snapdragon 8 Gen 2, 12GB RAM, 256GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xl font-bold">$1,099</span>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox"
+                                                data-phone="Samsung Galaxy S23 Ultra"></div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Samsung Phone 2 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20s23%20plus%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=13&orientation=landscape"
+                                        alt="Samsung Galaxy S23+" class="w-full h-48 object-cover object-top">
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">Galaxy S23+</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.7</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">Snapdragon 8 Gen 2, 8GB RAM, 256GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xl font-bold">$999</span>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox"
+                                                data-phone="Samsung Galaxy S23+"></div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Samsung Phone 3 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20z%20fold%205%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20foldable%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=14&orientation=landscape"
+                                        alt="Samsung Galaxy Z Fold 5" class="w-full h-48 object-cover object-top">
+                                    <div
+                                        class="absolute top-3 right-3 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                        Foldable</div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">Galaxy Z Fold 5</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.6</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">Snapdragon 8 Gen 2, 12GB RAM, 512GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xl font-bold">$1,799</span>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox"
+                                                data-phone="Samsung Galaxy Z Fold 5"></div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Samsung Phone 4 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20z%20flip%205%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20foldable%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=15&orientation=landscape"
+                                        alt="Samsung Galaxy Z Flip 5" class="w-full h-48 object-cover object-top">
+                                    <div
+                                        class="absolute top-3 right-3 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                        Foldable</div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">Galaxy Z Flip 5</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.5</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">Snapdragon 8 Gen 2, 8GB RAM, 256GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xl font-bold">$999</span>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox"
+                                                data-phone="Samsung Galaxy Z Flip 5"></div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Samsung Phone 5 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20a54%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20mid-range%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=16&orientation=landscape"
+                                        alt="Samsung Galaxy A54" class="w-full h-48 object-cover object-top">
+                                    <div
+                                        class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                        Mid-range</div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">Galaxy A54</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.4</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">Exynos 1380, 6GB RAM, 128GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xl font-bold">$449</span>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox"
+                                                data-phone="Samsung Galaxy A54"></div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Samsung Phone 6 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20a14%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20budget%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=17&orientation=landscape"
+                                        alt="Samsung Galaxy A14" class="w-full h-48 object-cover object-top">
+                                    <div
+                                        class="absolute top-3 right-3 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                        Budget</div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">Galaxy A14</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.3</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">Exynos 850, 4GB RAM, 64GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xl font-bold">$199</span>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox"
+                                                data-phone="Samsung Galaxy A14"></div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Apple Tab Content -->
+                    <div class="tab-content" id="apple-content">
+                        <div class="brand-bg mb-8 p-6 rounded-lg bg-white shadow-sm"
+                            style="background-image: url('https://readdy.ai/api/search-image?query=apple%20logo%20in%20black%20color%20on%20white%20background%2C%20minimalist%20clean%20design%2C%20corporate%20branding%2C%20professional%20look&width=200&height=200&seq=18&orientation=squarish')">
+                            <h2 class="text-3xl font-bold mb-2">Apple iPhones</h2>
+                            <p class="text-gray-600 mb-4">Experience the premium quality of Apple devices</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Apple Phone 1 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=iphone%2015%20pro%20max%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=19&orientation=landscape"
+                                        alt="iPhone 15 Pro Max" class="w-full h-48 object-cover object-top">
+                                    <div
+                                        class="absolute top-3 right-3 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
+                                        Flagship</div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">iPhone 15 Pro Max</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.9</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">A17 Pro, 8GB RAM, 256GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xl font-bold">$1,199</span>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox"
+                                                data-phone="iPhone 15 Pro Max"></div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Apple Phone 2 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=iphone%2015%20pro%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=20&orientation=landscape"
+                                        alt="iPhone 15 Pro" class="w-full h-48 object-cover object-top">
+                                    <div
+                                        class="absolute top-3 right-3 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
+                                        Flagship</div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">iPhone 15 Pro</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.8</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">A17 Pro, 8GB RAM, 128GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xl font-bold">$999</span>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox" data-phone="iPhone 15 Pro">
+                                            </div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Apple Phone 3 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=iphone%2015%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=21&orientation=landscape"
+                                        alt="iPhone 15" class="w-full h-48 object-cover object-top">
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">iPhone 15</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.7</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">A16 Bionic, 6GB RAM, 128GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xl font-bold">$799</span>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox" data-phone="iPhone 15"></div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Apple Phone 4 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=iphone%2014%20pro%20max%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=22&orientation=landscape"
+                                        alt="iPhone 14 Pro Max" class="w-full h-48 object-cover object-top">
+                                    <div
+                                        class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                        15% Off</div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">iPhone 14 Pro Max</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.8</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">A16 Bionic, 6GB RAM, 256GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <div>
+                                            <span class="text-xl font-bold">$999</span>
+                                            <span class="text-sm text-gray-500 line-through ml-2">$1,199</span>
+                                        </div>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox"
+                                                data-phone="iPhone 14 Pro Max"></div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Apple Phone 5 -->
+                            <div
+                                class="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
+                                <div class="relative">
+                                    <img src="https://readdy.ai/api/search-image?query=iphone%20se%202022%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20compact%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=400&height=300&seq=23&orientation=landscape"
+                                        alt="iPhone SE (2022)" class="w-full h-48 object-cover object-top">
+                                    <div
+                                        class="absolute top-3 right-3 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                        Budget</div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-semibold">iPhone SE (2022)</h3>
+                                        <div class="flex items-center">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-fill text-yellow-400"></i>
+                                            </div>
+                                            <span class="text-sm ml-1">4.5</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-3">A15 Bionic, 4GB RAM, 64GB</p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xl font-bold">$429</span>
+                                        <span class="text-sm text-green-600">Free shipping</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button
+                                            class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">View
+                                            Details</button>
+                                        <div class="flex items-center">
+                                            <div class="custom-checkbox compare-checkbox" data-phone="iPhone SE (2022)">
+                                            </div>
+                                            <label class="ml-2 text-sm text-gray-700">Compare</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Comparison Section -->
+    <section id="compare" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Compare Smartphones</h2>
+            <p class="text-gray-600 text-center mb-10 max-w-3xl mx-auto">Select up to three phones from our catalog to
+                compare their specifications side by side. Make an informed decision by analyzing the differences in
+                features, performance, and value.</p>
+            <div class="bg-gray-50 p-6 rounded-lg shadow-sm mb-10">
+                <h3 class="text-xl font-semibold mb-6">Currently Comparing</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="comparison-phones">
+                    <!-- Phone 1 -->
+                    <div class="bg-white rounded-lg p-4 border-2 border-primary">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-semibold">iPhone 15 Pro Max</h4>
+                            <button class="text-gray-400 hover:text-gray-600 remove-comparison"
+                                data-phone="iPhone 15 Pro Max">
+                                <i class="ri-close-line text-xl"></i>
+                            </button>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <img src="https://readdy.ai/api/search-image?query=iphone%2015%20pro%20max%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=200&height=200&seq=24&orientation=squarish"
+                                alt="iPhone 15 Pro Max" class="w-32 h-32 object-contain mb-4">
+                            <span class="text-lg font-bold">$1,199</span>
+                        </div>
+                    </div>
+                    <!-- Phone 2 -->
+                    <div class="bg-white rounded-lg p-4 border-2 border-primary">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-semibold">Samsung Galaxy S23 Ultra</h4>
+                            <button class="text-gray-400 hover:text-gray-600 remove-comparison"
+                                data-phone="Samsung Galaxy S23 Ultra">
+                                <i class="ri-close-line text-xl"></i>
+                            </button>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20s23%20ultra%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=200&height=200&seq=25&orientation=squarish"
+                                alt="Samsung Galaxy S23 Ultra" class="w-32 h-32 object-contain mb-4">
+                            <span class="text-lg font-bold">$1,099</span>
+                        </div>
+                    </div>
+                    <!-- Add Phone Placeholder -->
+                    <div
+                        class="bg-white rounded-lg p-4 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:border-gray-400 transition-colors">
+                        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 mb-3">
+                            <i class="ri-add-line text-2xl text-gray-500"></i>
+                        </div>
+                        <p class="text-gray-500 text-center">Add another phone<br>to compare</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Comparison Table -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="p-6 bg-gray-50 border-b">
+                    <h3 class="text-xl font-semibold">Detailed Comparison</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="py-4 px-6 text-left font-semibold text-gray-700 border-b">Specifications</th>
+                                <th class="py-4 px-6 text-left font-semibold text-gray-700 border-b">iPhone 15 Pro Max
+                                </th>
+                                <th class="py-4 px-6 text-left font-semibold text-gray-700 border-b">Samsung Galaxy S23
+                                    Ultra</th>
+                                <th class="py-4 px-6 text-left font-semibold text-gray-700 border-b">-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Display</td>
+                                <td class="py-4 px-6 border-b">6.7" Super Retina XDR OLED, 120Hz</td>
+                                <td class="py-4 px-6 border-b">6.8" Dynamic AMOLED 2X, 120Hz</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Processor</td>
+                                <td class="py-4 px-6 border-b">A17 Pro</td>
+                                <td class="py-4 px-6 border-b">Snapdragon 8 Gen 2</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">RAM</td>
+                                <td class="py-4 px-6 border-b">8GB</td>
+                                <td class="py-4 px-6 border-b">12GB</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Storage</td>
+                                <td class="py-4 px-6 border-b">256GB, 512GB, 1TB</td>
+                                <td class="py-4 px-6 border-b">256GB, 512GB, 1TB</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Main Camera</td>
+                                <td class="py-4 px-6 border-b">48MP (main) + 12MP (ultrawide) + 12MP (telephoto)</td>
+                                <td class="py-4 px-6 border-b">200MP (main) + 12MP (ultrawide) + 10MP (telephoto) + 10MP
+                                    (telephoto)</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Front Camera</td>
+                                <td class="py-4 px-6 border-b">12MP</td>
+                                <td class="py-4 px-6 border-b">12MP</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Battery</td>
+                                <td class="py-4 px-6 border-b">4,422 mAh</td>
+                                <td class="py-4 px-6 border-b">5,000 mAh</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Charging</td>
+                                <td class="py-4 px-6 border-b">27W wired, 15W wireless</td>
+                                <td class="py-4 px-6 border-b">45W wired, 15W wireless</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Operating System</td>
+                                <td class="py-4 px-6 border-b">iOS 17</td>
+                                <td class="py-4 px-6 border-b">Android 13, One UI 5.1</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">5G Support</td>
+                                <td class="py-4 px-6 border-b">Yes</td>
+                                <td class="py-4 px-6 border-b">Yes</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Water Resistance</td>
+                                <td class="py-4 px-6 border-b">IP68</td>
+                                <td class="py-4 px-6 border-b">IP68</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Dimensions</td>
+                                <td class="py-4 px-6 border-b">159.9 x 76.7 x 8.3 mm</td>
+                                <td class="py-4 px-6 border-b">163.4 x 78.1 x 8.9 mm</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 border-b font-medium">Weight</td>
+                                <td class="py-4 px-6 border-b">221g</td>
+                                <td class="py-4 px-6 border-b">234g</td>
+                                <td class="py-4 px-6 border-b">-</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">Price</td>
+                                <td class="py-4 px-6 font-bold">$1,199</td>
+                                <td class="py-4 px-6 font-bold">$1,099</td>
+                                <td class="py-4 px-6">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Deals Section -->
+    <section id="deals" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Hot Deals & Promotions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Deal 1 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=samsung%20galaxy%20s23%20ultra%20smartphone%20with%20discount%20tag%20and%20special%20offer%2C%20promotional%20image%2C%20professional%20product%20photography%20on%20clean%20background%2C%20high%20resolution&width=600&height=300&seq=26&orientation=landscape"
+                            alt="Samsung Galaxy S23 Ultra Deal" class="w-full h-48 object-cover object-top">
+                        <div class="absolute top-0 left-0 bg-red-500 text-white py-1 px-3 rounded-br-lg font-bold">SALE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Samsung Galaxy S23 Ultra</h3>
+                            <div class="flex items-center bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">25%
+                                OFF</div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Get the flagship Samsung with S Pen and powerful camera system at
+                            a special discount.</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold">$899</span>
+                                <span class="text-gray-500 line-through ml-2">$1,199</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-time-line"></i>
+                                </div>
+                                <span class="ml-1">Ends in 2 days</span>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-primary hover:bg-blue-600 text-white font-semibold py-3 !rounded-button whitespace-nowrap">Get
+                            This Deal</button>
+                    </div>
+                </div>
+                <!-- Deal 2 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=iphone%2014%20pro%20smartphone%20with%20discount%20tag%20and%20special%20offer%2C%20promotional%20image%2C%20professional%20product%20photography%20on%20clean%20background%2C%20high%20resolution&width=600&height=300&seq=27&orientation=landscape"
+                            alt="iPhone 14 Pro Deal" class="w-full h-48 object-cover object-top">
+                        <div class="absolute top-0 left-0 bg-red-500 text-white py-1 px-3 rounded-br-lg font-bold">SALE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">iPhone 14 Pro</h3>
+                            <div class="flex items-center bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">20%
+                                OFF</div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Previous generation flagship with Dynamic Island and powerful A16
+                            Bionic chip.</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold">$799</span>
+                                <span class="text-gray-500 line-through ml-2">$999</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-time-line"></i>
+                                </div>
+                                <span class="ml-1">Ends in 5 days</span>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-primary hover:bg-blue-600 text-white font-semibold py-3 !rounded-button whitespace-nowrap">Get
+                            This Deal</button>
+                    </div>
+                </div>
+                <!-- Deal 3 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=google%20pixel%207%20smartphone%20with%20discount%20tag%20and%20special%20offer%2C%20promotional%20image%2C%20professional%20product%20photography%20on%20clean%20background%2C%20high%20resolution&width=600&height=300&seq=28&orientation=landscape"
+                            alt="Google Pixel 7 Deal" class="w-full h-48 object-cover object-top">
+                        <div class="absolute top-0 left-0 bg-red-500 text-white py-1 px-3 rounded-br-lg font-bold">SALE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Google Pixel 7</h3>
+                            <div class="flex items-center bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">30%
+                                OFF</div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Experience the pure Android with amazing computational photography
+                            capabilities.</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold">$449</span>
+                                <span class="text-gray-500 line-through ml-2">$649</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-time-line"></i>
+                                </div>
+                                <span class="ml-1">Ends in 3 days</span>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-primary hover:bg-blue-600 text-white font-semibold py-3 !rounded-button whitespace-nowrap">Get
+                            This Deal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 text-center">
+                <a href="#" class="inline-flex items-center text-primary hover:text-blue-700 font-medium">
+                    View all deals
+                    <div class="w-5 h-5 flex items-center justify-center ml-1">
+                        <i class="ri-arrow-right-line"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-primary bg-opacity-5">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-4">Stay Updated</h2>
+                <p class="text-gray-600 mb-8">Subscribe to our newsletter to receive updates on the latest smartphone
+                    releases, exclusive deals, and tech news.</p>
+                <div class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                    <input type="email" placeholder="Your email address"
+                        class="flex-grow px-4 py-3 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-primary">
+                    <button
+                        class="bg-primary hover:bg-blue-600 text-white font-medium py-3 px-6 !rounded-button whitespace-nowrap">Subscribe</button>
+                </div>
+                <p class="text-sm text-gray-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+    <!-- About Us Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-8">About MobileMaster</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <p class="text-gray-600 mb-4">MobileMaster is your ultimate destination for smartphone
+                            comparison and discovery. We help millions of users make informed decisions when purchasing
+                            a new mobile device.</p>
+                        <p class="text-gray-600 mb-4">Our mission is to simplify the phone buying process by providing
+                            comprehensive, unbiased comparisons and up-to-date information on the latest devices from
+                            all major manufacturers.</p>
+                        <p class="text-gray-600 mb-6">Founded in 2020, we've grown to become one of the most trusted
+                            resources for smartphone buyers worldwide, with over 1 million monthly active users.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-primary hover:text-blue-700 font-medium">Learn more about us</a>
+                            <a href="#contact" class="text-primary hover:text-blue-700 font-medium">Contact our team</a>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-50 p-6 rounded-lg text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">500+</div>
+                            <p class="text-gray-600">Phones in database</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-lg text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">25+</div>
+                            <p class="text-gray-600">Brands covered</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-lg text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">1M+</div>
+                            <p class="text-gray-600">Monthly users</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-lg text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">4.8/5</div>
+                            <p class="text-gray-600">User satisfaction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Contact Us</h2>
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-8">
+                        <h3 class="text-xl font-semibold mb-4">Get in Touch</h3>
+                        <p class="text-gray-600 mb-6">Have questions or feedback? We'd love to hear from you. Fill out
+                            the form and our team will get back to you shortly.</p>
+                        <form>
+                            <div class="mb-4">
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                                <input type="text" id="name"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email
+                                    Address</label>
+                                <input type="email" id="email"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div class="mb-4">
+                                <label for="subject"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                                <input type="text" id="subject"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div class="mb-6">
+                                <label for="message"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                <textarea id="message" rows="4"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="bg-primary hover:bg-blue-600 text-white font-medium py-2 px-6 !rounded-button whitespace-nowrap">Send
+                                Message</button>
+                        </form>
+                    </div>
+                    <div class="bg-gray-50 p-8">
+                        <h3 class="text-xl font-semibold mb-6">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10 text-primary mr-3">
+                                    <i class="ri-map-pin-line"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Address</h4>
+                                    <p class="text-gray-600">123 Tech Street, San Francisco, CA 94107, United States</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10 text-primary mr-3">
+                                    <i class="ri-mail-line"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Email</h4>
+                                    <p class="text-gray-600">info@mobilemaster.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10 text-primary mr-3">
+                                    <i class="ri-phone-line"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Phone</h4>
+                                    <p class="text-gray-600">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10 text-primary mr-3">
+                                    <i class="ri-time-line"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Working Hours</h4>
+                                    <p class="text-gray-600">Monday - Friday: 9AM - 6PM<br>Saturday: 10AM - 4PM</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <h4 class="font-medium mb-3">Follow Us</h4>
+                            <div class="flex space-x-3">
+                                <a href="#"
+                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700">
+                                    <i class="ri-facebook-fill"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700">
+                                    <i class="ri-twitter-x-fill"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700">
+                                    <i class="ri-instagram-line"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700">
+                                    <i class="ri-linkedin-fill"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <a href="#" class="text-2xl font-['Pacifico'] text-white mb-4 inline-block">logo</a>
+                    <p class="text-gray-400 mb-6">Your ultimate destination for smartphone comparison and discovery.
+                        Find the perfect phone that matches your needs and budget.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-facebook-fill"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-twitter-x-fill"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-instagram-line"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-youtube-fill"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#brands" class="text-gray-400 hover:text-white">Browse Brands</a></li>
+                        <li><a href="#compare" class="text-gray-400 hover:text-white">Compare Phones</a></li>
+                        <li><a href="#deals" class="text-gray-400 hover:text-white">Deals & Offers</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Top Brands</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Samsung</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Apple</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Google</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Xiaomi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">OnePlus</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">View All Brands</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Cookie Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Sitemap</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Accessibility</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 MobileMaster. All rights reserved.</p>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-gray-400 text-sm">Payment Methods:</span>
+                        <div class="flex space-x-3">
+                            <div class="w-8 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-visa-fill text-xl"></i>
+                            </div>
+                            <div class="w-8 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-mastercard-fill text-xl"></i>
+                            </div>
+                            <div class="w-8 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-paypal-fill text-xl"></i>
+                            </div>
+                            <div class="w-8 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-apple-fill text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Compare Bar (Fixed at bottom) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 transform translate-y-full transition-transform z-40 compare-bar"
+        id="compare-bar">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <span class="font-medium mr-4">Compare:</span>
+                    <div class="flex items-center space-x-4" id="compare-bar-phones">
+                        <div class="flex items-center bg-gray-100 rounded-lg px-3 py-2">
+                            <span class="text-sm mr-2">iPhone 15 Pro Max</span>
+                            <button class="text-gray-400 hover:text-gray-600 remove-comparison-bar"
+                                data-phone="iPhone 15 Pro Max">
+                                <i class="ri-close-line"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center bg-gray-100 rounded-lg px-3 py-2">
+                            <span class="text-sm mr-2">Samsung Galaxy S23 Ultra</span>
+                            <button class="text-gray-400 hover:text-gray-600 remove-comparison-bar"
+                                data-phone="Samsung Galaxy S23 Ultra">
+                                <i class="ri-close-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-sm text-gray-500" id="compare-count">2/3 selected</span>
+                    <a href="#compare"
+                        class="bg-primary hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 !rounded-button whitespace-nowrap">Compare
+                        Now</a>
+                    <button class="text-gray-400 hover:text-gray-600" id="close-compare-bar">
+                        <i class="ri-close-line text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Cart Dropdown Toggle
+            const cartButton = document.getElementById('cart-button');
+            const cartDropdown = document.getElementById('cart-dropdown');
+            const cartContainer = document.getElementById('cart-container');
+
+            let isCartOpen = false;
+
+            cartButton.addEventListener('click', function (e) {
+                e.stopPropagation();
+                isCartOpen = !isCartOpen;
+                cartDropdown.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!cartContainer.contains(e.target) && isCartOpen) {
+                    cartDropdown.classList.add('hidden');
+                    isCartOpen = false;
+                }
+            });
+
+            // Quantity Controls
+            cartDropdown.addEventListener('click', function (e) {
+                const target = e.target;
+                const action = target.getAttribute('data-action');
+                if (!action) return;
+
+                const container = target.closest('.flex.items-center');
+                if (!container) return;
+
+                const input = container.querySelector('input');
+                let value = parseInt(input.value);
+
+                switch (action) {
+                    case 'increase':
+                        if (value < 99) input.value = value + 1;
+                        break;
+                    case 'decrease':
+                        if (value > 1) input.value = value - 1;
+                        break;
+                    case 'remove':
+                        container.closest('.flex.items-center.gap-3').remove();
+                        updateSubtotal();
+                        break;
+                }
+
+                updateSubtotal();
+            });
+
+            function updateSubtotal() {
+                const items = cartDropdown.querySelectorAll('.flex.items-center.gap-3');
+                let total = 0;
+
+                items.forEach(item => {
+                    const price = parseInt(item.querySelector('.text-sm.font-medium').textContent.replace('$', '').replace(',', ''));
+                    const quantity = parseInt(item.querySelector('input').value);
+                    total += price * quantity;
+                });
+
+                const subtotalElement = cartDropdown.querySelector('.flex.justify-between .font-medium:last-child');
+                subtotalElement.textContent = '$' + total.toLocaleString();
+            }
+
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+            // Custom Checkbox Toggle
+            const checkboxes = document.querySelectorAll('.custom-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', function () {
+                    this.classList.toggle('checked');
+                    // If it's a compare checkbox, handle comparison logic
+                    if (this.classList.contains('compare-checkbox')) {
+                        const phone = this.getAttribute('data-phone');
+                        const isChecked = this.classList.contains('checked');
+                        handleCompareSelection(phone, isChecked);
+                    }
+                });
+            });
+            // Custom Switch Toggle
+            const switches = document.querySelectorAll('.custom-switch');
+            switches.forEach(switchEl => {
+                switchEl.addEventListener('click', function () {
+                    this.classList.toggle('active');
+                });
+            });
+            // Brand Tab Switching
+            const brandTabs = document.querySelectorAll('.brand-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            brandTabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const brand = this.getAttribute('data-brand');
+                    // Remove active class from all tabs and add to clicked tab
+                    brandTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    // Hide all tab contents and show the selected one
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(`${brand}-content`).classList.add('active');
+                });
+            });
+            // Comparison Bar Logic
+            const compareBar = document.getElementById('compare-bar');
+            const compareCount = document.getElementById('compare-count');
+            const closeCompareBar = document.getElementById('close-compare-bar');
+            const compareBarPhones = document.getElementById('compare-bar-phones');
+            let selectedPhones = ['iPhone 15 Pro Max', 'Samsung Galaxy S23 Ultra'];
+            // Initial setup
+            updateCompareBar();
+            closeCompareBar.addEventListener('click', function () {
+                compareBar.classList.remove('show');
+            });
+            // Remove comparison from bar
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.remove-comparison-bar')) {
+                    const phone = e.target.closest('.remove-comparison-bar').getAttribute('data-phone');
+                    removeFromComparison(phone);
+                }
+            });
+            // Remove comparison from main section
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.remove-comparison')) {
+                    const phone = e.target.closest('.remove-comparison').getAttribute('data-phone');
+                    removeFromComparison(phone);
+                }
+            });
+            function handleCompareSelection(phone, isSelected) {
+                if (isSelected) {
+                    // Add phone to comparison if not already there and if less than 3 phones
+                    if (!selectedPhones.includes(phone) && selectedPhones.length < 3) {
+                        selectedPhones.push(phone);
+                    } else if (selectedPhones.length >= 3) {
+                        // Uncheck the checkbox if already 3 phones selected
+                        const checkbox = document.querySelector(`.compare-checkbox[data-phone="${phone}"]`);
+                        if (checkbox) {
+                            checkbox.classList.remove('checked');
+                        }
+                        alert('You can compare a maximum of 3 phones at a time.');
+                        return;
+                    }
+                } else {
+                    // Remove phone from comparison
+                    removeFromComparison(phone);
+                }
+                updateCompareBar();
+            }
+            function removeFromComparison(phone) {
+                // Remove from selected phones array
+                selectedPhones = selectedPhones.filter(p => p !== phone);
+                // Uncheck all checkboxes for this phone
+                const checkboxes = document.querySelectorAll(`.compare-checkbox[data-phone="${phone}"]`);
+                checkboxes.forEach(checkbox => {
+                    checkbox.classList.remove('checked');
+                });
+                updateCompareBar();
+            }
+            function updateCompareBar() {
+                // Update compare count
+                compareCount.textContent = `${selectedPhones.length}/3 selected`;
+                // Show or hide compare bar based on selection
+                if (selectedPhones.length > 0) {
+                    compareBar.classList.add('show');
+                } else {
+                    compareBar.classList.remove('show');
+                }
+                // Update phones in compare bar
+                compareBarPhones.innerHTML = '';
+                selectedPhones.forEach(phone => {
+                    const phoneElement = document.createElement('div');
+                    phoneElement.className = 'flex items-center bg-gray-100 rounded-lg px-3 py-2';
+                    phoneElement.innerHTML = `
+<span class="text-sm mr-2">${phone}</span>
+<button class="text-gray-400 hover:text-gray-600 remove-comparison-bar" data-phone="${phone}">
+<i class="ri-close-line"></i>
+</button>
+`;
+                    compareBarPhones.appendChild(phoneElement);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
