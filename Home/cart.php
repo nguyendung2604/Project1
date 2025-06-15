@@ -2,6 +2,21 @@
 session_start();
 require_once 'db_connect.php';
 
+// Check if user is logged in
+$user_id = $_SESSION['user_id'] ?? null;
+
+// Helper: Get or create cart_id for user
+function getOrCreateCartId($pdo, $user_id) {
+    $stmt = $pdo->prepare("SELECT cart_id FROM carts WHERE user_id = ?");
+    $stmt->execute([$user_id]);
+    $cart_id = $stmt->fetchColumn();
+    if (!$cart_id) {
+        $pdo->prepare("INSERT INTO carts (user_id) VALUES (?)")->execute([$user_id]);
+        $cart_id = $pdo->lastInsertId();
+    }
+    return $cart_id;
+}
+
 // Cart count for icon badge
 $cart_count = 0;
 if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
@@ -18,10 +33,27 @@ if (isset($_POST['update_cart'])) {
             $_SESSION['cart'][$product_id] = $qty;
         }
     }
+    // If logged in, sync to database
+    if ($user_id) {
+        $cart_id = getOrCreateCartId($pdo, $user_id);
+        // Remove all old items for this cart
+        $pdo->prepare("DELETE FROM cart_items WHERE cart_id = ?")->execute([$cart_id]);
+        // Insert current cart items
+        foreach ($_SESSION['cart'] as $product_id => $qty) {
+            $stmt = $pdo->prepare("INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (?, ?, ?)");
+            $stmt->execute([$cart_id, $product_id, $qty]);
+        }
+    }
 }
+
 if (isset($_POST['remove'])) {
     $remove_id = $_POST['remove'];
     unset($_SESSION['cart'][$remove_id]);
+    // If logged in, sync to database
+    if ($user_id) {
+        $cart_id = getOrCreateCartId($pdo, $user_id);
+        $pdo->prepare("DELETE FROM cart_items WHERE cart_id = ? AND product_id = ?")->execute([$cart_id, $remove_id]);
+    }
 }
 
 // Lấy thông tin sản phẩm trong giỏ hàng

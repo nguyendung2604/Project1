@@ -20,6 +20,23 @@ try {
     exit;
 }
 
+// Lấy danh sách Brand
+try {
+    $stmt_brands = $pdo->prepare("SELECT * FROM brands ORDER BY name ASC");
+    $stmt_brands->execute();
+    $brands = $stmt_brands->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $brands = [];
+}
+// Lấy danh sách Category
+try {
+    $stmt_categories = $pdo->prepare("SELECT * FROM categories ORDER BY name ASC");
+    $stmt_categories->execute();
+    $categories = $stmt_categories->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $categories = [];
+}
+
 // Cart count for icon badge
 $cart_count = 0;
 if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
@@ -97,11 +114,33 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                     <li class="nav-item">
                         <a class="nav-link fw-medium" href="index.php">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-medium" href="#brands">Brands</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-medium" href="#" id="brandsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Brands
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="brandsDropdown">
+                            <?php if (!empty($brands)): ?>
+                                <?php foreach ($brands as $brand): ?>
+                                    <li><a class="dropdown-item" href="#brand-<?php echo $brand['brand_id']; ?>"><?php echo htmlspecialchars($brand['name']); ?></a></li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li><span class="dropdown-item">No brands</span></li>
+                            <?php endif; ?>
+                        </ul>
                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link fw-medium" href="#catrgory">Catrgory</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-medium" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Category
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                            <?php if (!empty($categories)): ?>
+                                <?php foreach ($categories as $category): ?>
+                                    <li><a class="dropdown-item" href="#category-<?php echo $category['category_id']; ?>"><?php echo htmlspecialchars($category['name']); ?></a></li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li><span class="dropdown-item">No categories</span></li>
+                            <?php endif; ?>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-medium" href="#deals">Deals</a>
@@ -159,50 +198,41 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
 
 
 
-    <!-- Featured Products Section -->
-     <section>
-        <div class="product-container">
-            <?php if (empty($products)): ?>
-                <p>No products available.</p>
-            <?php else: ?>
-                <?php foreach ($products as $product): ?>
-                    <div class="product-card">
-                        <?php if ($product['image_url']): ?>
-                            <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
-                        <?php else: ?>
-                            <img src="default-image.jpg" alt="No image available">
-                        <?php endif; ?>
-                        <h3><?php echo htmlspecialchars($product['name']); ?></h3>
-                        <p><strong>Brand:</strong> <?php echo htmlspecialchars($product['brand_name']); ?></p>
-                        <p class="price">$<?php echo number_format($product['price']); ?></p>
-                        <p class="<?php echo $product['quantity'] > 0 ? 'stock' : 'out-of-stock'; ?>">
-                            <?php echo $product['quantity'] > 0 ? 'In Stock: ' . $product['quantity'] : 'Out of Stock'; ?>
-                        </p>
-                        <a href="product_details.php?id=<?php echo $product['product_id']; ?>">View Details</a>
+<!-- Featured Products Section -->
+<section>
+    <div class="product-container">
+        <?php if (empty($products)): ?>
+            <p>No products available.</p>
+        <?php else: ?>
+            <?php foreach ($products as $product): ?>
+                <div class="product-card">
+                    <?php if ($product['image_url']): ?>
+                        <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                    <?php else: ?>
+                        <img src="default-image.jpg" alt="No image available">
+                    <?php endif; ?>
+                    <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                    <p><strong>Brand:</strong> <?php echo htmlspecialchars($product['brand_name']); ?></p>
+                    <p class="price">$<?php echo number_format($product['price']); ?></p>
+
+                      <!-- Icons -->
+                <button class="btn btn-link text-dark p-2 me-2 nav-icon" aria-label="Shopping Cart">
+                     <a href="product_details.php?id=<?php echo $product['product_id']; ?>"> <i class="bi bi-eye"></i> </a>
+                </button>
+                  <button class="btn btn-link text-dark p-2 me-2 nav-icon" aria-label="Shopping Cart">
+                   <i class="bi bi-arrow-left-right"></i>
+                </button>
+                    <div class="button-group">
+                        <button class="add-to-cart" onclick="addToCart(<?php echo $product['product_id']; ?>)">Add to Cart</button>
                     </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
-    </section>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</section>
 
 
 
-
-
-     <div class="bg-white rounded-lg p-4 border-2 border-primary">
-                        <div class="flex items-center justify-between mb-4">
-                            <h4 class="font-semibold">iPhone 15 Pro Max</h4>
-                            <button class="text-gray-400 hover:text-gray-600 remove-comparison"
-                                data-phone="iPhone 15 Pro Max">
-                                <i class="ri-close-line text-xl"></i>
-                            </button>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <img src="https://readdy.ai/api/search-image?query=iphone%2015%20pro%20max%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=200&height=200&seq=24&orientation=squarish"
-                                alt="iPhone 15 Pro Max" class="w-32 h-32 object-contain mb-4">
-                            <span class="text-lg font-bold">$1,199</span>
-                        </div>
-                    </div>s
   
 
     <!-- Newsletter Section -->
