@@ -1,0 +1,74 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+#main-content {
+    flex: 1; /* Cho phép nội dung chính chiếm hết không gian còn lại */
+    padding-left: 0; /* Mặc định */
+    transition: padding-left 0.3s ease; /* Hiệu ứng chuyển đổi khi sidebar ẩn/hiện */
+}
+#sidebar {
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    background-color: #343a40; /* Màu nền sidebar */
+    color: white;
+    transition: margin-left 0.3s ease;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1030; /* Đảm bảo sidebar nằm trên */
+    overflow-y: auto; /* Thêm cuộn nếu nội dung sidebar quá dài */
+}
+#sidebar.collapsed {
+    margin-left: -250px; /* Ẩn sidebar */
+}
+.sidebar-header {
+    padding: 20px 15px;
+    text-align: center;
+    border-bottom: 1px solid #495057;
+    font-size: 1.2em;
+}
+.sidebar-menu .nav-link {
+    color: #adb5bd;
+    padding: 10px 15px;
+    display: block;
+}
+.sidebar-menu .nav-link:hover,
+.sidebar-menu .nav-link.active {
+    background-color: #495057;
+    color: white;
+}
+.sidebar-menu .nav-link i {
+    margin-right: 10px;
+}
+#sidebar-toggle {
+    cursor: pointer;
+    color: white;
+}
+/* Điều chỉnh nội dung chính khi sidebar mở */
+@media (min-width: 768px) {
+    body.sidebar-open #main-content {
+        padding-left: 250px;
+    }
+}
+/* Điều chỉnh padding top cho main-content để tránh bị header che */
+#main-content > .container-fluid {
+    padding-top: 70px; /* Bằng chiều cao của header */
+}
+footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid #e9ecef;
+}
+/* Căn giữa dọc và ngang cho nội dung chính */
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 56px - 60px); /* 100vh - header height - footer height */
+    text-align: center;
+}

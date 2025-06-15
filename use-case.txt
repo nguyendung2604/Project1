@@ -1,0 +1,71 @@
+Use Case cho hệ thống Thương mại điện tử
+1. Quản lý người dùng (User Management)
+Khách không đăng nhập (Guest)
+
+Đăng ký tài khoản người dùng mới (ok)
+Đăng nhập vào hệ thống (ok)
+Xem danh sách sản phẩm và thông tin chi tiết (ok)
+Tìm kiếm sản phẩm theo tên, danh mục, thương hiệu (ok)
+Lọc sản phẩm theo giá, đánh giá, thương hiệu (ok)
+
+Người dùng đã đăng nhập (Authenticated User)
+
+Quản lý thông tin cá nhân (cập nhật hồ sơ, đổi mật khẩu) (ok)
+Xem lịch sử đơn hàng (ok)
+Theo dõi tình trạng đơn hàng (ok)
+Đánh giá và nhận xét sản phẩm đã mua (ok)
+Thêm sản phẩm vào danh sách yêu thích (ok)
+Nhận thông báo về khuyến mãi, đơn hàng, sản phẩm mới
+
+Quản trị viên (Admin)
+
+Quản lý tài khoản người dùng (thêm, sửa, xóa, khóa tài khoản) (ok)
+Xem thống kê tổng quan về hoạt động của cửa hàng (ok)
+Phân quyền cho người dùng hệ thống (ok)
+
+//------------------------------------------------
+3. Quản lý giỏ hàng và đặt hàng (Cart & Order Management)
+Khách không đăng nhập (Guest)
+
+Thêm sản phẩm vào giỏ hàng (ok)
+Xem và cập nhật giỏ hàng (số lượng, xóa sản phẩm) (ok)
+Đặt hàng không cần tài khoản (checkout as guest) (ok)
+
+Người dùng đã đăng nhập (Authenticated User)
+
+Thêm sản phẩm vào giỏ hàng với các tùy chọn (màu sắc, kích thước)
+Cập nhật giỏ hàng (thay đổi số lượng, xóa sản phẩm) (ok)
+Lưu giỏ hàng để mua sau (ok)
+Tiến hành đặt hàng từ giỏ hàng (ok)
+Chọn địa chỉ giao hàng (thêm địa chỉ mới hoặc chọn từ danh sách) (ok)
+Chọn phương thức thanh toán (ok)
+Nhập mã giảm giá (nếu có) (ok)
+Xác nhận đơn hàng và thanh toán (ok mới chỉ ship cod)
+Hủy đơn hàng (nếu chưa xử lý) (ok)
+Xem chi tiết đơn hàng (ok)
+Yêu cầu hoàn trả sản phẩm (ok)
+
+Quản trị viên (Admin)
+
+Xem tất cả đơn hàng trong hệ thống (ok)
+Tìm kiếm và lọc đơn hàng theo trạng thái, ngày, khách hàng (ok)
+Cập nhật trạng thái đơn hàng (đang xử lý, đang giao, đã giao, đã hủy) (ok)
+Xem chi tiết đơn hàng (ok)
+Xử lý yêu cầu hoàn trả (ok)
+Tạo đơn hàng mới cho khách hàng (ok)
+//----------------------------------
+4. Quản lý thanh toán (Payment Management)
+Người dùng đã đăng nhập (Authenticated User)
+
+Chọn phương thức thanh toán (thẻ tín dụng, chuyển khoản, thanh toán khi nhận hàng) (ok)
+Thanh toán trực tuyến (ok)
+Xem lịch sử thanh toán (ok)
+Yêu cầu hoàn tiền (ok)
+
+Quản trị viên (Admin)
+
+Quản lý phương thức thanh toán có sẵn trong hệ thống (ok)
+Xem thống kê thanh toán (ok)
+Xử lý thanh toán thủ công (ok)
+Xử lý yêu cầu hoàn tiền (ok)
+Cập nhật trạng thái thanh toán (ok)

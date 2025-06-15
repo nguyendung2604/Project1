@@ -1,0 +1,16 @@
+#brand-slider {
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE/Edge */
+    overflow-x: auto;
+  }
+
+  #brand-slider::-webkit-scrollbar {
+    display: none;                /* Chrome/Safari */
+  }
+
+  .brand-tab {
+    min-height: 150px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    background: #fff;
+  }
