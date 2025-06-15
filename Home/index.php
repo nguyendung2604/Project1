@@ -42,6 +42,50 @@ $cart_count = 0;
 if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     $cart_count = array_sum($_SESSION['cart']);
 }
+
+// Helper: Get or create cart_id for user (copy từ cart.php)
+function getOrCreateCartId($pdo, $user_id) {
+    $stmt = $pdo->prepare("SELECT cart_id FROM carts WHERE user_id = ?");
+    $stmt->execute([$user_id]);
+    $cart_id = $stmt->fetchColumn();
+    if (!$cart_id) {
+        $pdo->prepare("INSERT INTO carts (user_id, total_price) VALUES (?, 0)")->execute([$user_id]);
+        $cart_id = $pdo->lastInsertId();
+    }
+    return $cart_id;
+}
+
+// Xử lý thêm sản phẩm vào giỏ hàng khi nhận được add_to_cart
+if (isset($_POST['add_to_cart'])) {
+    // Nếu chưa đăng nhập thì chuyển hướng sang trang login
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: login.php');
+        exit;
+    }
+    $product_id = (int)$_POST['add_to_cart'];
+    if (!isset($_SESSION['cart'][$product_id])) {
+        $_SESSION['cart'][$product_id] = 1;
+    } else {
+        $_SESSION['cart'][$product_id]++;
+    }
+    // Nếu đã đăng nhập, lưu vào DB
+    $user_id = $_SESSION['user_id'];
+    $cart_id = getOrCreateCartId($pdo, $user_id);
+    // Kiểm tra sản phẩm đã có trong cart_items chưa
+    $stmt = $pdo->prepare("SELECT quantity FROM cart_items WHERE cart_id = ? AND product_id = ?");
+    $stmt->execute([$cart_id, $product_id]);
+    $exists = $stmt->fetchColumn();
+    if ($exists) {
+        $pdo->prepare("UPDATE cart_items SET quantity = quantity + 1 WHERE cart_id = ? AND product_id = ?")
+            ->execute([$cart_id, $product_id]);
+    } else {
+        $pdo->prepare("INSERT INTO cart_items (cart_id, product_id, quantity, price) VALUES (?, ?, 1, 0)")
+            ->execute([$cart_id, $product_id]);
+    }
+    // Chuyển hướng về chính trang index để tránh submit lại khi refresh
+    header('Location: index.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -103,8 +147,14 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                         <i class="bi bi-person-circle"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="login.php">Login</a></li>
-                        <li><a class="dropdown-item" href="register.php">Register</a></li>
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <li><a class="dropdown-item" href="#">Hello, <?php echo htmlspecialchars($_SESSION['username'] ?? 'User'); ?></a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                        <?php else: ?>
+                            <li><a class="dropdown-item" href="login.php">Login</a></li>
+                            <li><a class="dropdown-item" href="register.php">Register</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -223,8 +273,12 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                    <i class="bi bi-arrow-left-right"></i>
                 </button>
                     <div class="button-group">
-                        <button class="add-to-cart" onclick="addToCart(<?php echo $product['product_id']; ?>)">Add to Cart</button>
-                    </div>
+                    <form method="post" action="index.php" style="display:inline;">
+                        <input type="hidden" name="add_to_cart" value="<?php echo $product['product_id']; ?>">
+                        <button type="submit" class="add-to-cart btn btn-primary">Add to Cart</button>
+                    </form>
+                        
+                </div>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>

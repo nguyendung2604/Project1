@@ -24,31 +24,34 @@ function getOrCreateCartId($pdo, $user_id) {
 // Handle Add to Cart
 $cart_message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'], $_POST['quantity'])) {
+    // Nếu chưa đăng nhập thì chuyển hướng sang trang login
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: login.php');
+        exit;
+    }
     $pid = (int)$_POST['product_id'];
     $qty = (int)$_POST['quantity'];
     if ($pid > 0 && $qty > 0) {
         $_SESSION['cart'][$pid] = ($_SESSION['cart'][$pid] ?? 0) + $qty;
 
         // Sync to DB if logged in
-        if (isset($_SESSION['user_id'])) {
-            $user_id = $_SESSION['user_id'];
-            $cart_id = getOrCreateCartId($pdo, $user_id);
+        $user_id = $_SESSION['user_id'];
+        $cart_id = getOrCreateCartId($pdo, $user_id);
 
-            // Check if item exists
-            $stmt = $pdo->prepare("SELECT cart_item_id FROM cart_items WHERE cart_id = ? AND product_id = ?");
-            $stmt->execute([$cart_id, $pid]);
-            if ($stmt->fetchColumn()) {
-                // Update quantity
-                $pdo->prepare("UPDATE cart_items SET quantity = ? WHERE cart_id = ? AND product_id = ?")
-                    ->execute([$_SESSION['cart'][$pid], $cart_id, $pid]);
-            } else {
-                // Get product price
-                $priceStmt = $pdo->prepare("SELECT price FROM products WHERE product_id = ?");
-                $priceStmt->execute([$pid]);
-                $price = $priceStmt->fetchColumn();
-                $pdo->prepare("INSERT INTO cart_items (cart_id, product_id, quantity, price) VALUES (?, ?, ?, ?)")
-                    ->execute([$cart_id, $pid, $qty, $price]);
-            }
+        // Check if item exists
+        $stmt = $pdo->prepare("SELECT cart_item_id FROM cart_items WHERE cart_id = ? AND product_id = ?");
+        $stmt->execute([$cart_id, $pid]);
+        if ($stmt->fetchColumn()) {
+            // Update quantity
+            $pdo->prepare("UPDATE cart_items SET quantity = ? WHERE cart_id = ? AND product_id = ?")
+                ->execute([$_SESSION['cart'][$pid], $cart_id, $pid]);
+        } else {
+            // Get product price
+            $priceStmt = $pdo->prepare("SELECT price FROM products WHERE product_id = ?");
+            $priceStmt->execute([$pid]);
+            $price = $priceStmt->fetchColumn();
+            $pdo->prepare("INSERT INTO cart_items (cart_id, product_id, quantity, price) VALUES (?, ?, ?, ?)")
+                ->execute([$cart_id, $pid, $qty, $price]);
         }
         $cart_message = "Added to cart!";
     }
