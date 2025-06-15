@@ -1,12 +1,24 @@
 <?php
 session_start();
 // Kết nối database
-require 'db_connect.php';
+require_once 'db_connect.php'; // Make sure you have this at the top
 
 // Cart count for icon badge
 $cart_count = 0;
 if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     $cart_count = array_sum($_SESSION['cart']);
+}
+
+// Function to get or create cart ID for the user
+function getOrCreateCartId($pdo, $user_id) {
+    $stmt = $pdo->prepare("SELECT cart_id FROM carts WHERE user_id = ?");
+    $stmt->execute([$user_id]);
+    $cart_id = $stmt->fetchColumn();
+    if (!$cart_id) {
+        $pdo->prepare("INSERT INTO carts (user_id, total_price) VALUES (?, 0)")->execute([$user_id]);
+        $cart_id = $pdo->lastInsertId();
+    }
+    return $cart_id;
 }
 
 // Handle Add to Cart
@@ -15,11 +27,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'], $_POST[
     $pid = (int)$_POST['product_id'];
     $qty = (int)$_POST['quantity'];
     if ($pid > 0 && $qty > 0) {
-        if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
-        if (isset($_SESSION['cart'][$pid])) {
-            $_SESSION['cart'][$pid] += $qty;
-        } else {
-            $_SESSION['cart'][$pid] = $qty;
+        $_SESSION['cart'][$pid] = ($_SESSION['cart'][$pid] ?? 0) + $qty;
+
+        // Sync to DB if logged in
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+            $cart_id = getOrCreateCartId($pdo, $user_id);
+
+            // Check if item exists
+            $stmt = $pdo->prepare("SELECT cart_item_id FROM cart_items WHERE cart_id = ? AND product_id = ?");
+            $stmt->execute([$cart_id, $pid]);
+            if ($stmt->fetchColumn()) {
+                // Update quantity
+                $pdo->prepare("UPDATE cart_items SET quantity = ? WHERE cart_id = ? AND product_id = ?")
+                    ->execute([$_SESSION['cart'][$pid], $cart_id, $pid]);
+            } else {
+                // Get product price
+                $priceStmt = $pdo->prepare("SELECT price FROM products WHERE product_id = ?");
+                $priceStmt->execute([$pid]);
+                $price = $priceStmt->fetchColumn();
+                $pdo->prepare("INSERT INTO cart_items (cart_id, product_id, quantity, price) VALUES (?, ?, ?, ?)")
+                    ->execute([$cart_id, $pid, $qty, $price]);
+            }
         }
         $cart_message = "Added to cart!";
     }

@@ -16,6 +16,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_start();
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
+            $_SESSION['user_id'] = $user['user_id']; // Giả sử bạn lưu trữ ID người dùng trong session
+
+            $_SESSION['cart'] = []; // Clear any previous cart
+
+            // Lấy hoặc tạo giỏ hàng
+            function getOrCreateCartId($pdo, $user_id) {
+                $stmt = $pdo->prepare("SELECT cart_id FROM carts WHERE user_id = ?");
+                $stmt->execute([$user_id]);
+                $cart_id = $stmt->fetchColumn();
+                if (!$cart_id) {
+                    $pdo->prepare("INSERT INTO carts (user_id, total_price) VALUES (?, 0)")->execute([$user_id]);
+                    $cart_id = $pdo->lastInsertId();
+                }
+                return $cart_id;
+            }
+
+            $user_id = $_SESSION['user_id'];
+            $cart_id = getOrCreateCartId($pdo, $user_id);
+            $stmt = $pdo->prepare("SELECT product_id, quantity FROM cart_items WHERE cart_id = ?");
+            $stmt->execute([$cart_id]);
+            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($items) {
+                foreach ($items as $item) {
+                    $_SESSION['cart'][$item['product_id']] = $item['quantity'];
+                }
+            }
+
             if ($user['role'] === 'admin') {
                 header("Location: ../admin/index.php"); // Chuyển hướng đến trang admin
                 exit;

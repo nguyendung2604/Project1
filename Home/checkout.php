@@ -42,9 +42,35 @@ foreach ($products as &$product) {
 // Handle order submission
 $order_message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['address'], $_POST['payment_method'])) {
-    // Here you would insert order into DB (not implemented)
-    $_SESSION['cart'] = [];
-    $order_message = "Thank you for your purchase!";
+    $user_id = $_SESSION['user_id'] ?? null;
+    $shipping_address = $_POST['address'];
+    $status = 'pending'; // or 'delivered' if you want
+    $total_price = $total;
+
+    try {
+        // 1. Insert into orders table
+        $stmt = $pdo->prepare("INSERT INTO orders (user_id, total_price, shipping_address, status) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$user_id, $total_price, $shipping_address, $status]);
+        $order_id = $pdo->lastInsertId();
+
+        // 2. Insert each item into order_items table
+        foreach ($products as $product) {
+            $stmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
+            $stmt->execute([
+                $order_id,
+                $product['product_id'],
+                $product['qty'],
+                $product['price']
+            ]);
+        }
+
+        // 3. Clear cart
+        $_SESSION['cart'] = [];
+        $order_message = "Thank you for your purchase! Your order has been placed.";
+
+    } catch (PDOException $e) {
+        $order_message = "Error placing order: " . $e->getMessage();
+    }
 }
 ?>
 <!DOCTYPE html>

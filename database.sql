@@ -124,7 +124,6 @@ INSERT INTO categories (name) VALUES
 ('Accessories'),
 ('Wearable'),
 ('Smart Home'),
-('Gaming'),
 ('Audio');
 
 

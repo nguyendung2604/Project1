@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); // This must be the first line!
 require_once 'db_connect.php';
 
 // Check if user is logged in
@@ -11,7 +11,7 @@ function getOrCreateCartId($pdo, $user_id) {
     $stmt->execute([$user_id]);
     $cart_id = $stmt->fetchColumn();
     if (!$cart_id) {
-        $pdo->prepare("INSERT INTO carts (user_id) VALUES (?)")->execute([$user_id]);
+        $pdo->prepare("INSERT INTO carts (user_id, total_price) VALUES (?, 0)")->execute([$user_id]);
         $cart_id = $pdo->lastInsertId();
     }
     return $cart_id;
